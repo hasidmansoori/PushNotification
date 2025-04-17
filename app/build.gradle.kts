@@ -1,14 +1,14 @@
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.google)
+    alias(libs.plugins.kotlin.kapt) // Added for Glide's annotation processor
 }
 
 android {
     namespace = "com.example.pushnotification"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.pushnotification"
@@ -46,34 +46,43 @@ android {
 }
 
 dependencies {
+    // AndroidX Core & Lifecycle
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
+
+    // Jetpack Compose
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    // UI
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
+    // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    // Room
     implementation("androidx.room:room-runtime:2.6.1")
 
-
     // Firebase
-    implementation("com.google.firebase:firebase-messaging:23.3.1")
+    implementation(libs.firebase.messaging)
     implementation("com.google.firebase:firebase-auth-ktx:23.2.0")
 
     // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-    implementation("com.github.bumptech.glide:glide:4.8.0")
 
+    // Glide (updated)
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
